@@ -1,0 +1,63 @@
+/* CSS File: menu.css */
+
+/* Main container for the menu on the left */
+.menu_container {
+    -fx-background-color: rgb(69, 93, 122); /* Darker gray with slight transparency */
+
+    -fx-alignment: center; /* Center the content in the container */
+
+
+}
+
+
+.menu_top {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-alignment: top-center;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgb(35, 49, 66), 15, 0.3, 0, 5);
+}
+
+
+.menu_top Text {
+    -fx-fill: #000000;
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 0 0;
+}
+
+
+.menu_container Button {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 20;
+    -fx-text-fill: #000000;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-pref-width: 180;
+    -fx-pref-height: 70;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgb(41, 41, 41), 20, 0.3, 0, 5);
+    -fx-cursor: hand;
+}
+
+
+.menu_container Button:hover {
+    -fx-background-color: linear-gradient(to right, #ffffff 0%, #c7daff 40%, #82aae4 85%, #6994d3 100%);
+
+}
+
+
+.menu_container Button:pressed {
+    -fx-background-color: linear-gradient(to right, #6baedc, #3a8ad1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 2, 0.4, 0, 1);
+}
+
+
+.menu_container Button ImageView {
+    -fx-fit-height: 40;
+    -fx-fit-width: 40;
+}
+
+

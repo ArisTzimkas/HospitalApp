@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="container" stylesheets="@../../../Styles/add_in.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iee2021168.Controllers.Search.SearchAppointController">
+   <Button fx:id="searchAppointBackB" layoutX="29.0" layoutY="39.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="10.0">
+      <graphic>
+         <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../Images/return.png" />
+         </ImageView>
+      </graphic>
+   </Button>
+   <ChoiceBox fx:id="ChoiceAppointType" layoutX="425.0" layoutY="169.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="150.0" />
+   <Text fill="#d4e3ff" layoutX="349.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Αναζήτηση Ραντεβού" AnchorPane.topAnchor="45.0">
+      <font>
+         <Font name="Impact" size="36.0" />
+      </font></Text>
+   <Text fill="#d4e3ff" layoutX="239.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Είδος αναζήτησης :" AnchorPane.rightAnchor="605.0">
+      <font>
+         <Font name="Segoe UI Semibold" size="24.0" />
+      </font>
+   </Text>
+   <Text fx:id="textAMKA" fill="#d4e3ff" layoutX="270.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ΑΜΚΑ Ασθενή :" AnchorPane.rightAnchor="605.0">
+      <font>
+         <Font name="Segoe UI Semibold" size="24.0" />
+      </font>
+   </Text>
+   <TextField fx:id="amkaField" layoutX="400.0" layoutY="220.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.topAnchor="230.0" />
+   <Button fx:id="SearchAMKAB" layoutX="641.0" layoutY="223.0" mnemonicParsing="false" text="Αναζήτηση" AnchorPane.rightAnchor="200.0" />
+   <ScrollPane fitToWidth="true" layoutX="336.0" layoutY="387.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+      <VBox alignment="CENTER" spacing="10.0" styleClass="container2">
+         <Label fx:id="resultLabel" contentDisplay="CENTER" styleClass="labelInside" text="Εδώ θα εμφανιστούν τα αποτελέσματα" textAlignment="CENTER" wrapText="true" />
+      </VBox>
+   </ScrollPane>
+   <ImageView fitHeight="180.0" fitWidth="950.0" layoutX="67.0" layoutY="48.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0">
+      <image>
+         <Image url="@../../../Images/heartbeat.png" />
+      </image>
+   </ImageView>
+</AnchorPane>

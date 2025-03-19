@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="home_container" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iee2021168.Controllers.HomeController">
+    <children>
+        <Text fill="#daf6ff" stroke="#c3c6c2" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Καλώς ήρθες!" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="50.0">
+            <font>
+                <Font name="Impact" size="36.0" />
+            </font>
+        </Text>
+        <Text fill="#daf6ff" layoutX="100.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Τελευταίες αλλαγές στα ραντεβού :" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="220.0">
+            <font>
+                <Font name="Segoe UI Semibold" size="22.0" />
+            </font>
+        </Text>
+        <TableView fx:id="tableView" layoutY="267.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+            <columns>
+                <TableColumn fx:id="operTypeColumn" prefWidth="262.0" text="Κατηγορία">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="type" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="operTimeColumn" prefWidth="266.0" text="Ημερομηνία αλλαγής">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="time" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="appointIdColumn" prefWidth="271.0" text="Κωδικός ραντεβού">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="appointId" />
+                    </cellValueFactory>
+                </TableColumn>
+
+            </columns>
+        </TableView>
+      <Label fx:id="timeLabel" layoutX="898.0" layoutY="60.0" text="l" textAlignment="RIGHT" textFill="#daf6ff" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="60.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label" layoutX="511.0" layoutY="221.0" text="Δεν υπάρχουν αλλαγές στα ραντεβού" textFill="#daf6ff" AnchorPane.leftAnchor="511.0" AnchorPane.topAnchor="222.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="22.0" />
+         </font>
+      </Label>
+    </children>
+   <stylesheets>
+      <URL value="@../../../Styles/home.css" />
+      <URL value="@../../../Styles/edit.css" />
+   </stylesheets>
+</AnchorPane>

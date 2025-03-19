@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="container" stylesheets="@../../../Styles/add_in.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iee2021168.Controllers.Add.AddDocController">
+   <children>
+      <Button fx:id="addDocBackB" layoutX="198.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="10.0">
+         <graphic>
+            <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/return.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Text fill="#d4e3ff" layoutX="343.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Προσθήκη Γιατρού" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="313.4375" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font name="Impact" size="36.0" />
+         </font>
+      </Text>
+      <TextField fx:id="amkaField" layoutX="425.0" layoutY="260.0" prefHeight="40.0" prefWidth="150.0" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="425.0" AnchorPane.topAnchor="240.0" />
+      <TextField fx:id="nameField" layoutX="425.0" layoutY="347.0" prefHeight="40.0" prefWidth="150.0" AnchorPane.leftAnchor="425.0" AnchorPane.topAnchor="300.0" />
+      <DatePicker fx:id="dateField" layoutX="425.0" layoutY="503.0" prefHeight="40.0" prefWidth="150.0" AnchorPane.leftAnchor="425.0" AnchorPane.topAnchor="420.0" />
+      <Text fill="#d4e3ff" layoutX="334.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ΑΜΚΑ :" AnchorPane.rightAnchor="585.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="24.0" />
+         </font></Text>
+      <Text fill="#d4e3ff" layoutX="215.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ονοματεπώνημο :" AnchorPane.rightAnchor="585.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="24.0" />
+         </font></Text>
+      <Text fill="#d4e3ff" layoutX="258.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ημ. Γέννησης :" AnchorPane.rightAnchor="585.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="24.0" />
+         </font></Text>
+      <Text fill="#d4e3ff" layoutX="333.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Τμήμα :" AnchorPane.rightAnchor="585.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="24.0" />
+         </font></Text>
+      <Button fx:id="verifyB" layoutX="584.0" layoutY="253.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Έλεγχος" AnchorPane.rightAnchor="290.0" AnchorPane.topAnchor="232.0" />
+      <Button fx:id="saveB" layoutX="321.0" layoutY="599.0" mnemonicParsing="false" prefHeight="125.0" prefWidth="360.0" text="Αποθήκευση" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="320.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="200.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" styleClass="labelAbove" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="ChoiceDepar" layoutX="426.0" layoutY="424.0" prefHeight="40.0" prefWidth="150.0" AnchorPane.leftAnchor="425.0" AnchorPane.topAnchor="360.0" />
+      <ImageView fitHeight="180.0" fitWidth="950.0" layoutX="57.0" layoutY="38.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0">
+         <image>
+            <Image url="@../../../Images/heartbeat.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

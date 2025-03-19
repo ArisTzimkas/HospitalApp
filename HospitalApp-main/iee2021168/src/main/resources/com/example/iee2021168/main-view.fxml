@@ -1,0 +1,17 @@
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane fx:id="mainBorderPane" xmlns:fx="http://javafx.com/javafx"
+            xmlns="http://javafx.com/fxml" >
+
+  <!-- Define other elements, e.g., top, left, center, etc. -->
+  <left>
+    <fx:include source="menu.fxml"/>
+  </left>
+
+  <center>
+    <fx:include source="home.fxml"/>
+  </center>
+
+</BorderPane>
+

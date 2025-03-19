@@ -1,0 +1,29 @@
+.add_container {
+    -fx-background-color: linear-gradient(to bottom, #39546c 0%, #152737 80%, #0b151e 100%);
+}
+
+
+
+.button {
+    -fx-background-color: linear-gradient(to right, #ffffff 0%, #c7daff 40%, #82aae4 85%, #6994d3 100%);
+    -fx-text-fill: #303030;
+    -fx-padding: 10 20;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 20, 0.5, 0, 5);
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #6baedc, #3a8ad1);
+
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(to right, #6baedc, #3a8ad1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 2, 0.4, 0, 1);
+    -fx-translate-y: 1px;
+}
