@@ -29,13 +29,13 @@ public class EditController {
 
 
     public static class Doctor {
-        private final int amka;
+        private final String amka;
         private final String name;
         private final int departmentId;
         private final String birthday;
         private double rating;
 
-        public Doctor(int amka, String name, int departmentId, String birthday, double rating) {
+        public Doctor(String amka, String name, int departmentId, String birthday, double rating) {
             this.amka = amka;
             this.name = name;
             this.departmentId = departmentId;
@@ -43,7 +43,7 @@ public class EditController {
             this.rating = rating;
         }
 
-        public int getAmka() {
+        public String getAmka() {
             return amka;
         }
 
@@ -73,7 +73,7 @@ public class EditController {
     @FXML
     private TableView<Doctor> doctorTable;
     @FXML
-    private TableColumn<Doctor, Integer> doAmkaColumn;
+    private TableColumn<Doctor, String> doAmkaColumn;
     @FXML
     private TableColumn<Doctor, String> doNameColumn;
     @FXML
@@ -87,20 +87,20 @@ public class EditController {
 
 
     public static class Patient {
-        private final int amka;
+        private final String amka;
         private final String name;
         private final String birthday;
         private String phone;
 
 
-        public Patient(int amka, String name, String birthday, String phone) {
+        public Patient(String amka, String name, String birthday, String phone) {
             this.amka = amka;
             this.name = name;
             this.birthday = birthday;
             this.phone = phone;
         }
 
-        public int getAmka() {
+        public String getAmka() {
             return amka;
         }
         public String getName() {
@@ -120,7 +120,7 @@ public class EditController {
     @FXML
     private TableView<Patient> patientTable;
     @FXML
-    private TableColumn<Patient , Integer> patAmkaColumn;
+    private TableColumn<Patient , String> patAmkaColumn;
     @FXML
     private TableColumn<Patient , String> patNameColumn;
     @FXML
@@ -132,11 +132,11 @@ public class EditController {
     public static class Appointments {
         private final int id;
         private  String date;
-        private final int amkaPat;
-        private final int  amkaDoc;
+        private final String amkaPat;
+        private final String  amkaDoc;
 
 
-        public Appointments(int id, String date, int amkaPat, int amkaDoc) {
+        public Appointments(int id, String date, String amkaPat, String amkaDoc) {
             this.id = id;
             this.amkaPat = amkaPat;
             this.amkaDoc = amkaDoc;
@@ -149,10 +149,10 @@ public class EditController {
         public String getDate() {
             return date;
         }
-        public int getAmkaPat() {
+        public String getAmkaPat() {
             return amkaPat;
         }
-        public int getAmkaDoc() {
+        public String getAmkaDoc() {
             return amkaDoc;
         }
 
@@ -167,9 +167,9 @@ public class EditController {
     @FXML
     public TableColumn<Appointments, String> appointDateColumn;
     @FXML
-    public TableColumn<Appointments, Integer> appointDocColumn;
+    public TableColumn<Appointments, String> appointDocColumn;
     @FXML
-    public TableColumn<Appointments, Integer> appointPatColumn;
+    public TableColumn<Appointments, String> appointPatColumn;
 
 
     @FXML
@@ -241,19 +241,21 @@ public class EditController {
     private void editDoc() {
         Doctor selectedDoctor = doctorTable.getSelectionModel().getSelectedItem();
         if (selectedDoctor != null) {
-            int doctorAMKA = selectedDoctor.getAmka();
+            String doctorAMKA = selectedDoctor.getAmka();
             if (!new_rating.getText().isEmpty()) {
-                try {
-                    double editedRating = Double.parseDouble(new_rating.getText());
-                    boolean result = Database.editDoc(doctorAMKA, editedRating);
-                    if (result) {
-                        ObservableList<Doctor> updatedDoctors = Database.getDoctors();
-                        doctorTable.setItems(FXCollections.observableArrayList(updatedDoctors));
-                        labelDoc.setText("Επιτυχης ενημέρωση");
-                        new_rating.setText("");
+                if (new_rating.getText().matches("\\d+")) {
+                    try {
+                        double editedRating = Double.parseDouble(new_rating.getText());
+                        boolean result = Database.editDoc(doctorAMKA, editedRating);
+                        if (result) {
+                            ObservableList<Doctor> updatedDoctors = Database.getDoctors();
+                            doctorTable.setItems(FXCollections.observableArrayList(updatedDoctors));
+                            labelDoc.setText("Επιτυχης ενημέρωση");
+                            new_rating.setText("");
+                        }
+                    } catch (NumberFormatException e) {
+                        labelDoc.setText("Το πεδίο δέχεται μόνο ακέραιους αριθμούς!");
                     }
-                } catch (NumberFormatException e) {
-                    labelDoc.setText("Το πεδίο δέχεται μόνο αριθμούς!");
                 }
             } else {
                 labelDoc.setText("Το πεδίο είναι κενό!");
@@ -266,7 +268,7 @@ public class EditController {
     private void editPat() {
         Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
         if (selectedPatient != null) {
-            int patAmka = selectedPatient.getAmka();
+            String patAmka = selectedPatient.getAmka();
             if (!new_phone.getText().isEmpty()) {
                 if (new_phone.getText().matches("[0-9]+")) {
                     boolean result = Database.editPat(patAmka, new_phone.getText());
@@ -316,7 +318,7 @@ public class EditController {
     private void deleteDoc() {
         Doctor selectedDoctor = doctorTable.getSelectionModel().getSelectedItem();
         if (selectedDoctor != null) {
-            int doctorAMKA = selectedDoctor.getAmka();
+            String doctorAMKA = selectedDoctor.getAmka();
             boolean result = Database.deleteDoctorByAmka(doctorAMKA);
             if (result) {
                 ObservableList<Doctor> updatedDoctors = Database.getDoctors();
@@ -334,7 +336,7 @@ public class EditController {
     private void deletePat() {
         Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
         if (selectedPatient != null) {
-            int patientAmka = selectedPatient.getAmka();
+            String patientAmka = selectedPatient.getAmka();
             boolean result = Database.deletePatientByAmka(patientAmka);
             if (result) {
 

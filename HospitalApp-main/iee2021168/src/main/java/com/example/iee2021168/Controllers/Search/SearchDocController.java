@@ -42,9 +42,9 @@ public class SearchDocController implements Initializable {
 
 
 
-    public record Doctor(String name, int amka, double rating, String departmentId) {}
+    public record Doctor(String name, String amka, double rating, String departmentId) {}
     public record DepartmentDoctorCount(String depar, int doctorCount) {}
-    public record DoctorRecord(int patAmka, String source) {}
+    public record DoctorRecord(String patAmka, String source) {}
 
 
 
@@ -102,7 +102,7 @@ public class SearchDocController implements Initializable {
             if(amkaField.getText().isEmpty()) {
                 resultsLabel.setText("Το πεδίο ΑΜΚΑ δεν μπορεί να είναι κενό!");
             }else {
-                int amka = Integer.parseInt(amkaField.getText());
+                String amka =amkaField.getText();
                 boolean exists = Database.checkAmkaDoctors(amka);
                 if (exists) {
                     ObservableList<DoctorRecord> docRec = Database.getDoctorRelatedRecords(amka);

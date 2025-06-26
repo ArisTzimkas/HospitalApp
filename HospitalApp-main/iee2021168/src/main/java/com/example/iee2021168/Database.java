@@ -12,19 +12,33 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Database {
 
     // Database connection info
-    private static final String URL = "jdbc:postgresql://dblabs.iee.ihu.gr:5432/iee2021168?currentSchema=texnologia_basewn_dedomenwn";
-    private static final String USER = "iee2021168";
-    private static final String PASSWORD = "Aristeidhs34?";
+    private static final String HOST = "postgresql-database-aris.i.aivencloud.com";
+    private static final String PORT = "16093";
+    private static final String DATABASE = "defaultdb";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "AVNS_HfzgKG5FlMYByaldXOy";
+
 
     public static Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
+
+            String url = "jdbc:postgresql://postgresql-database-aris.i.aivencloud.com:16093/Hospital-app?currentSchema=hospital";
+
+            Properties props = new Properties();
+            props.setProperty("user", USER);
+            props.setProperty("password", PASSWORD);
+            props.setProperty("sslmode", "require");
+            Connection connection = DriverManager.getConnection(url, props);
+
+            return connection;
+        } catch (Exception e) {
+            System.err.println(" Database connection error: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -32,13 +46,14 @@ public class Database {
 
 
 
-    public static boolean checkAmkaDoctors(int amka) {
+
+    public static boolean checkAmkaDoctors(String amka) {
         String sql = "{? = CALL check_amka_doctors(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.registerOutParameter(1, Types.BOOLEAN);
-                stmt.setInt(2, amka);
+                stmt.setString(2, amka);
                 stmt.execute();
                 return stmt.getBoolean(1);
             }
@@ -48,13 +63,13 @@ public class Database {
         return false;
     }
 
-    public static boolean checkAmkaPatients(int amka) {
+    public static boolean checkAmkaPatients(String amka) {
         String sql = "{? = CALL check_amka_patients(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.registerOutParameter(1, Types.BOOLEAN);
-                stmt.setInt(2, amka);
+                stmt.setString(2, amka);
                 stmt.execute();
                 return stmt.getBoolean(1);
             }
@@ -64,14 +79,14 @@ public class Database {
         return false;
     }
 
-    public static int insertDoc(int amka, String name, int deo, String date) {
+    public static int insertDoc(String amka, String name, int deo, String date) {
         String sql = "{? = CALL insert_doc(?, ?, ?, ?)}";
         int result = -1;
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.registerOutParameter(1, Types.INTEGER);
-                stmt.setInt(2, amka);
+                stmt.setString(2, amka);
                 stmt.setString(3, name);
                 stmt.setInt(4, deo);
                 stmt.setString(5, date);
@@ -89,14 +104,14 @@ public class Database {
         return result;
     }
 
-    public static int insertPat(int amka, String name, String date, String phone) {
+    public static int insertPat(String amka, String name, String date, String phone) {
         String sql = "{? = CALL insert_pat(?, ?, ?, ?)}";
         int result = -1;
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.registerOutParameter(1, Types.INTEGER);
-                stmt.setInt(2, amka);
+                stmt.setString(2, amka);
                 stmt.setString(3, name);
                 stmt.setString(4, date);
                 stmt.setString(5, phone);
@@ -115,17 +130,17 @@ public class Database {
         return result;
     }
 
-    public static int getRandomDoc(int dep_id){
+    public static String getRandomDoc(int dep_id){
         String sql = "{? = CALL get_random_doctor_amka(?)}";
-        int result = -1;
+        String result = null;
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.registerOutParameter(1,Types.INTEGER);
+                stmt.registerOutParameter(1,Types.VARCHAR);
                 stmt.setInt(2,dep_id);
 
                 stmt.execute();
-                result=stmt.getInt(1);
+                result=stmt.getString(1);
                 System.out.println("get_random_doc result : " + result);
             }
         } catch (SQLException e) {
@@ -137,7 +152,7 @@ public class Database {
         return result;
     }
 
-    public static void insertAppoint(int pat_amka, String date, int doc_amka) {
+    public static void insertAppoint(String pat_amka, String date, String doc_amka) {
         String sql = "{? = CALL insert_appoint(?, ?, ?)}";
         int result = -1;  // Default to -1, indicating failure
         try (Connection conn = connect()) {
@@ -145,9 +160,9 @@ public class Database {
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.registerOutParameter(1, Types.INTEGER);
 
-                stmt.setInt(2, pat_amka);
+                stmt.setString(2, pat_amka);
                 stmt.setString(3, date);
-                stmt.setInt(4, doc_amka);
+                stmt.setString(4, doc_amka);
 
                 stmt.execute();
                 result = stmt.getInt(1);
@@ -172,7 +187,7 @@ public class Database {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         String name = rs.getString(1);
-                        int amka = rs.getInt(2);
+                        String amka = rs.getString(2);
                         doctors.add(new AddHisController.DoctorRecord(name, amka));
                     }
                 }
@@ -184,15 +199,15 @@ public class Database {
         return doctors;
     }
 
-    public static int insertHistRecord(int patAmka, int docAmka, int roomId, String docName) {
+    public static int insertHistRecord(String patAmka, String docAmka, int roomId, String docName) {
         int result = -1;
         String sql = "{ ? = call insert_hist(?, ?, ?, ?) }";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
                 stmt.registerOutParameter(1, Types.INTEGER);
-                stmt.setInt(2, patAmka);
-                stmt.setInt(3, docAmka);
+                stmt.setString(2, patAmka);
+                stmt.setString(3, docAmka);
                 stmt.setInt(4, roomId);
                 stmt.setString(5, docName);
 
@@ -215,7 +230,7 @@ public class Database {
             try (CallableStatement stmt = conn.prepareCall(sql);
                  ResultSet rs = stmt.executeQuery()) {
                  while (rs.next()) {
-                     int amka = rs.getInt(1);
+                     String amka = rs.getString(1);
                      String name = rs.getString(2);
                      int departmentId = rs.getInt(3);
                      String birthday = rs.getString(4);
@@ -231,12 +246,12 @@ public class Database {
         return doctors;
     }
 
-    public static boolean deleteDoctorByAmka(int doAmka) {
+    public static boolean deleteDoctorByAmka(String doAmka) {
         String sql = "{CALL delete_doctor_by_amka(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, doAmka);
+                stmt.setString(1, doAmka);
 
                 stmt.execute();
                 return true;
@@ -248,12 +263,12 @@ public class Database {
         return false;
     }
 
-    public static boolean editDoc(int doAmka, double rating){
+    public static boolean editDoc(String doAmka, double rating){
         String sql = "{CALL edit_doc(?, ?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, doAmka);
+                stmt.setString(1, doAmka);
                 stmt.setDouble(2, rating);
 
                 stmt.execute();
@@ -277,7 +292,7 @@ public class Database {
             try (CallableStatement stmt = conn.prepareCall(sql);
                  ResultSet rs = stmt.executeQuery()) {
                  while (rs.next()) {
-                     int amka = rs.getInt(1);
+                     String amka = rs.getString(1);
                      String name = rs.getString(2);
                      String birthday = rs.getString(3);
                      String phone = rs.getString(4);
@@ -292,12 +307,12 @@ public class Database {
         return patients;
     }
 
-    public static boolean editPat(int patAmka, String  phone){
+    public static boolean editPat(String patAmka, String  phone){
         String sql = "{CALL edit_pat(?, ?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, patAmka);
+                stmt.setString(1, patAmka);
                 stmt.setString(2, phone);
 
                 stmt.execute();
@@ -320,8 +335,8 @@ public class Database {
                  while (rs.next()) {
                      int id = rs.getInt(1);
                      String date = rs.getString(2);
-                     int amkaPat = rs.getInt(3);
-                     int amkaDoc = rs.getInt(4);
+                     String amkaPat = rs.getString(3);
+                     String amkaDoc = rs.getString(4);
 
                      appointments.add(new EditController.Appointments(id, date, amkaPat, amkaDoc));
                  }
@@ -333,12 +348,12 @@ public class Database {
     }
 
 
-    public static boolean deletePatientByAmka(int patAmka) {
+    public static boolean deletePatientByAmka(String patAmka) {
         String sql = "{CALL delete_patient_by_amka(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, patAmka);
+                stmt.setString(1, patAmka);
 
                 stmt.execute();
                 return true;
@@ -384,12 +399,12 @@ public class Database {
     }
 
 
-    public static void addRating(int doAmka, double rating){
+    public static void addRating(String doAmka, double rating){
         String sql = "{CALL do_rating_add(?, ?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, doAmka);
+                stmt.setString(1, doAmka);
                 stmt.setDouble(2, rating);
                 stmt.execute();
             }
@@ -408,7 +423,7 @@ public class Database {
             try (CallableStatement stmt = conn.prepareCall(sql); ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String name = rs.getString(1);
-                    int amka = rs.getInt(2);
+                    String amka = rs.getString(2);
                     double rating = rs.getDouble(3);
                     String departmentId = rs.getString(4);
 
@@ -442,16 +457,16 @@ public class Database {
         return departmentCounts;
     }
 
-    public static ObservableList<SearchDocController.DoctorRecord> getDoctorRelatedRecords(int doAmka) {
+    public static ObservableList<SearchDocController.DoctorRecord> getDoctorRelatedRecords(String doAmka) {
         ObservableList<SearchDocController.DoctorRecord> doctorRecords = FXCollections.observableArrayList();
         String sql = "{call get_doctor_related_records(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                 stmt.setInt(1, doAmka);
+                 stmt.setString(1, doAmka);
                  try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
-                        int patAmka = rs.getInt(1);
+                        String patAmka = rs.getString(1);
                         String source = rs.getString(2);
                         doctorRecords.add(new SearchDocController.DoctorRecord(patAmka, source));
                     }
@@ -509,13 +524,13 @@ public class Database {
         return patientAgesCounts;
     }
 
-    public static ObservableList<SearchPatController.Patient3> getPatientSources(int patAmka) {
+    public static ObservableList<SearchPatController.Patient3> getPatientSources(String patAmka) {
         ObservableList<SearchPatController.Patient3> sources = FXCollections.observableArrayList();
         String sql = "{call get_patient_sources(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                 stmt.setInt(1, patAmka);
+                 stmt.setString(1, patAmka);
                  try (ResultSet rs = stmt.executeQuery()) {
                      while (rs.next()) {
                          String source = rs.getString(1);
@@ -576,13 +591,13 @@ public class Database {
         return patientAgesCounts;
     }
 
-    public static ObservableList<SearchAppointController.Appoint3> getAppointByAmka(int patAmka) {
+    public static ObservableList<SearchAppointController.Appoint3> getAppointByAmka(String patAmka) {
         ObservableList<SearchAppointController.Appoint3> sources = FXCollections.observableArrayList();
         String sql = "{call get_appointments_by_pat_amka(?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
-                stmt.setInt(1, patAmka);
+                stmt.setString(1, patAmka);
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         String date = rs.getString(1);
@@ -622,17 +637,3 @@ public class Database {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

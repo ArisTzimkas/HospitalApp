@@ -69,7 +69,7 @@ public class AddHisController implements Initializable {
             }
 
             label.setVisible(true);
-            int amka = Integer.parseInt(amkaText);
+            String amka =amkaText;
             boolean exists = Database.checkAmkaPatients(amka);
 
             if (!exists) {
@@ -132,7 +132,7 @@ public class AddHisController implements Initializable {
         };
     }
 
-    public record DoctorRecord(String doctorName, int doctorAmka) {
+    public record DoctorRecord(String doctorName, String doctorAmka) {
         @Override
         public String toString() {
             return doctorName;
@@ -141,14 +141,14 @@ public class AddHisController implements Initializable {
 
     private void save() {
         try {
-            int amka = Integer.parseInt(amkaField.getText());
+            String amka =amkaField.getText();
             DoctorRecord selectedDoctor = ChoiceDoc.getValue();
             if (selectedDoctor == null) {
                 label.setText("Επιλέξτε γιατρό!");
                 return;
             }
 
-            int docAmka = selectedDoctor.doctorAmka();
+            String docAmka = selectedDoctor.doctorAmka();
             System.out.println(""+docAmka);
             String selectedRoom = ChoiceRoom.getValue();
             if (selectedRoom == null || selectedRoom.isEmpty()) {

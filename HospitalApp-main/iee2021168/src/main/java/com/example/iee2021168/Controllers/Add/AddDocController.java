@@ -66,8 +66,7 @@ public class AddDocController implements Initializable {
                 return;
             }
 
-            int amka = Integer.parseInt(amkaText);
-            boolean exists = Database.checkAmkaDoctors(amka);
+            boolean exists = Database.checkAmkaDoctors(amkaText);
 
 
             if (!exists) {
@@ -102,7 +101,7 @@ public class AddDocController implements Initializable {
                 resultLabel.setText("Συμπληρώστε όλα τα πεδία!");
                 return;
             }
-            int amka = Integer.parseInt(amkaField.getText());
+            String amka =amkaField.getText();
             String name = nameField.getText();
             LocalDate selectedDate = dateField.getValue();
             String department = ChoiceDepar.getValue();

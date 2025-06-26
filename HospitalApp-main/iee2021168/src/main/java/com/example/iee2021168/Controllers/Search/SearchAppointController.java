@@ -111,7 +111,7 @@ public class SearchAppointController implements Initializable {
             if (amkaField.getText().isEmpty()) {
                 resultLabel.setText("Το πεδίο ΑΜΚΑ δεν μπορεί να είναι κενό!");
             }else {
-                int amka = Integer.parseInt(amkaField.getText());
+                String amka =amkaField.getText();
                 boolean exists = Database.checkAmkaPatients(amka);
                 if (exists) {
                     ObservableList<SearchAppointController.Appoint3> a3 = Database.getAppointByAmka(amka);

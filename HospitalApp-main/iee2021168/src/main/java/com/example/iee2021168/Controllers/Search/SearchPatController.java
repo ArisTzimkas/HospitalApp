@@ -96,7 +96,7 @@ public class SearchPatController implements Initializable {
             if(amkaField.getText().isEmpty()){
                 resultLabel.setText("Το πεδίο ΑΜΚΑ δεν μπορεί να είναι κενό!");
             }else {
-                int amka = Integer.parseInt(amkaField.getText());
+                String amka =amkaField.getText();
                 boolean exists = Database.checkAmkaPatients(amka);
                 if (exists) {
                     ObservableList<SearchPatController.Patient3> pat3 = Database.getPatientSources(amka);

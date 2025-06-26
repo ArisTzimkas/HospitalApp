@@ -69,8 +69,7 @@ public class AddAppointController implements Initializable {
                 return;
             }
             label.setVisible(true);
-            int amka = Integer.parseInt(amkaText);
-            boolean exists = Database.checkAmkaPatients(amka);
+            boolean exists = Database.checkAmkaPatients(amkaText);
 
 
             if (!exists) {
@@ -110,15 +109,15 @@ public class AddAppointController implements Initializable {
                 return;
             }
 
-            int amka = Integer.parseInt(amkaField.getText());
+            String amka =amkaField.getText();
             LocalDate selectedDate = dateField.getValue();
             String department = ChoiceDepar.getValue();
             int departmentId = getDepartmentId(department);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = selectedDate.format(formatter);
-            int docAmka = Database.getRandomDoc(departmentId);
+            String docAmka = Database.getRandomDoc(departmentId);
 
-            if(docAmka==0){
+            if(docAmka==null){
                 throw new Exception("Δεν υπάρχει γιατρός σε αυτό το τμήμα.");
             }
             Database.insertAppoint(amka, formattedDate, docAmka);

@@ -67,8 +67,7 @@ public class AddPatController implements Initializable {
                 return;
             }
 
-            int amka = Integer.parseInt(amkaText);
-            boolean exists = Database.checkAmkaPatients(amka);
+            boolean exists = Database.checkAmkaPatients(amkaText);
 
 
             if (!exists) {
@@ -109,7 +108,7 @@ public class AddPatController implements Initializable {
                 return;
             }
 
-            int amka = Integer.parseInt(amkaField.getText());
+            String amka =amkaField.getText();
             String name = nameField.getText();
             String phone = phoneField.getText();
             LocalDate selectedDate = dateField.getValue();
