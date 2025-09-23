@@ -66,9 +66,13 @@ public class AddPatController implements Initializable {
 
                 return;
             }
+            if (!amkaText.matches("\\d{11}")) {
+                label.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
 
+            //if the template is correct
             boolean exists = Database.checkAmkaPatients(amkaText);
-
 
             if (!exists) {
                 nameField.setDisable(false);
@@ -108,9 +112,20 @@ public class AddPatController implements Initializable {
                 return;
             }
 
+
             String amka =amkaField.getText();
             String name = nameField.getText();
             String phone = phoneField.getText();
+
+            if (!amka.matches("\\d{11}")) {
+                label.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
+            if (!phone.matches("\\d+")) {
+                label.setText("Το τηλέφωνο πρέπει να περιέχει μόνο αριθμούς!");
+                return;
+            }
+
             LocalDate selectedDate = dateField.getValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = selectedDate.format(formatter);
@@ -128,6 +143,7 @@ public class AddPatController implements Initializable {
             } else {
                 label.setText("Προέκυψε κάποιο σφάλμα, ελέγξτε αν υπάρχει ήδη το ΑΜΚΑ.");
             }
+
 
         } catch (NumberFormatException e) {
             label.setText("Το πεδίο ΑΜΚΑ δέχεται μόνο 9 ψηφία!");

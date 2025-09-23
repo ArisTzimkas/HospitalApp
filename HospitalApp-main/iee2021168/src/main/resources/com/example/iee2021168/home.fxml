@@ -18,10 +18,10 @@
         </Text>
         <Text fill="#daf6ff" layoutX="100.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Τελευταίες αλλαγές στα ραντεβού :" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="220.0">
             <font>
-                <Font name="Segoe UI Semibold" size="22.0" />
+                <Font name="Franklin Gothic Demi Cond" size="28.0" />
             </font>
         </Text>
-        <TableView fx:id="tableView" layoutY="267.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+        <TableView fx:id="tableView" layoutY="267.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="260.0">
             <columns>
                 <TableColumn fx:id="operTypeColumn" prefWidth="262.0" text="Κατηγορία">
                     <cellValueFactory>
@@ -40,6 +40,9 @@
                 </TableColumn>
 
             </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
         </TableView>
       <Label fx:id="timeLabel" layoutX="898.0" layoutY="60.0" text="l" textAlignment="RIGHT" textFill="#daf6ff" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="60.0">
          <font>
@@ -48,7 +51,7 @@
       </Label>
       <Label fx:id="label" layoutX="511.0" layoutY="221.0" text="Δεν υπάρχουν αλλαγές στα ραντεβού" textFill="#daf6ff" AnchorPane.leftAnchor="511.0" AnchorPane.topAnchor="222.0">
          <font>
-            <Font name="Segoe UI Semibold" size="22.0" />
+            <Font name="Franklin Gothic Demi Cond" size="28.0" />
          </font>
       </Label>
     </children>

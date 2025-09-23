@@ -3,6 +3,8 @@ module com.example.iee2021168 {
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
+    requires org.postgresql.jdbc;
+    requires com.zaxxer.hikari;
 
 
     opens com.example.iee2021168 to javafx.fxml;

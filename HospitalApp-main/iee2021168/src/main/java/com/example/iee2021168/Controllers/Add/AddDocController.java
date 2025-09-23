@@ -65,6 +65,10 @@ public class AddDocController implements Initializable {
                 ChoiceDepar.setDisable(true);
                 return;
             }
+            if (!amkaText.matches("\\d{11}")) {
+                resultLabel.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
 
             boolean exists = Database.checkAmkaDoctors(amkaText);
 
@@ -105,6 +109,15 @@ public class AddDocController implements Initializable {
             String name = nameField.getText();
             LocalDate selectedDate = dateField.getValue();
             String department = ChoiceDepar.getValue();
+
+            if (!amka.matches("\\d{11}")) {
+                resultLabel.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
+
+
+
+
             int departmentId = getDepartmentId(department);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = selectedDate.format(formatter);

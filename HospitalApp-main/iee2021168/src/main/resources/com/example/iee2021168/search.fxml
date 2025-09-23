@@ -4,38 +4,49 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
+
+<?import javafx.scene.control.Label?>
 <AnchorPane prefHeight="650.0" prefWidth="1000.0" styleClass="add_container" stylesheets="@../../../Styles/add.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iee2021168.Controllers.Search.SearchController">
-   <children>
-      <Text fill="#d4e3ff" layoutX="422.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Αναζήτηση" AnchorPane.topAnchor="45.0">
-         <font>
-            <Font name="Impact" size="36.0" />
-         </font></Text>
-      <Button fx:id="searchDocB" layoutX="230.0" layoutY="131.0" mnemonicParsing="false" prefHeight="150.0" prefWidth="300.0" text="Γιατρός" AnchorPane.bottomAnchor="350.0" AnchorPane.leftAnchor="150.0">
+   <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-font-family: Impact; -fx-font-size: 36;" text="Αναζήτηση" textFill="#d4e3ff" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0" />
+
+   <GridPane alignment="CENTER" hgap="50.0" vgap="50.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
+
+      <Button fx:id="searchAppointB" maxHeight="150.0" maxWidth="Infinity" text="Ραντεβού" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../Images/002-stethoscope.png" />
-               </image>
+               <Image url="@../../../Images/calendar.png" />
             </ImageView>
-         </graphic></Button>
-      <Button fx:id="searchPatB" layoutX="561.0" layoutY="250.0" mnemonicParsing="false" prefHeight="150.0" prefWidth="300.0" text="Ασθενής" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="150.0">
+         </graphic>
+      </Button>
+      <Button fx:id="searchPatB" maxHeight="150.0" maxWidth="Infinity" text="Ασθενής" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../Images/patient.png" />
-               </image>
+               <Image url="@../../../Images/patient.png" />
             </ImageView>
-         </graphic></Button>
-      <Button fx:id="searchAppointB" layoutX="261.0" layoutY="422.0" mnemonicParsing="false" prefHeight="150.0" prefWidth="300.0" text="Ραντεβού" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="150.0">
+         </graphic>
+      </Button>
+      <Button fx:id="searchDocB" maxHeight="150.0" maxWidth="Infinity" text="Γιατρός" GridPane.halignment="CENTER">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../Images/calendar.png" />
-               </image>
+               <Image url="@../../../Images/002-stethoscope.png" />
             </ImageView>
-         </graphic></Button>
-   </children>
+         </graphic>
+      </Button>
+
+      <columnConstraints>
+         <ColumnConstraints hgrow="ALWAYS" percentWidth="33.0" />
+         <ColumnConstraints hgrow="ALWAYS" percentWidth="33.0" />
+      </columnConstraints>
+
+      <!-- Row Constraints -->
+      <rowConstraints> <!-- For title -->
+         <RowConstraints percentHeight="33.0" vgrow="NEVER" />
+         <RowConstraints percentHeight="33.0" vgrow="NEVER" />
+         <RowConstraints percentHeight="33.0" />
+      </rowConstraints>
+   </GridPane>
 </AnchorPane>

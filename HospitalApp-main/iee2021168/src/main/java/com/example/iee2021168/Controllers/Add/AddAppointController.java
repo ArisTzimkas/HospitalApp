@@ -68,6 +68,11 @@ public class AddAppointController implements Initializable {
                 dateField.setValue(null);
                 return;
             }
+            if (!amkaText.matches("\\d{11}")) {
+                label.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
+
             label.setVisible(true);
             boolean exists = Database.checkAmkaPatients(amkaText);
 
@@ -112,6 +117,12 @@ public class AddAppointController implements Initializable {
             String amka =amkaField.getText();
             LocalDate selectedDate = dateField.getValue();
             String department = ChoiceDepar.getValue();
+
+            if (!amka.matches("\\d{11}")) {
+                label.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
+
             int departmentId = getDepartmentId(department);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = selectedDate.format(formatter);

@@ -1,10 +1,14 @@
 package com.example.iee2021168.Controllers;
 
 import com.example.iee2021168.Models.Model;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable{
@@ -19,6 +23,7 @@ public class MainController implements Initializable{
                 case "Edit" ->mainBorderPane.setCenter(Model.getInstance().getViewFactory().getEdit());
                 case "Search" -> mainBorderPane.setCenter(Model.getInstance().getViewFactory().getSearch());
                 case "Home" -> mainBorderPane.setCenter(Model.getInstance().getViewFactory().getHome());
+                case "Loading" -> mainBorderPane.setCenter(Model.getInstance().getViewFactory().getLoading());
             }
         } );
 

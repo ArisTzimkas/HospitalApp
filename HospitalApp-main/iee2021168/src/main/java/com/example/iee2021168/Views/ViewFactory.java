@@ -4,6 +4,7 @@ import com.example.iee2021168.Controllers.MainController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -55,8 +56,9 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Πληροφοριακό σύστημα μηχανογράφησης νοσοκομείου.");
-        stage.setResizable(false);
-
+        stage.setResizable(true);////////////////////////////////////          RESIZABLE OR NOT           ///////////////////////////////
+        stage.setMinHeight(650);
+        stage.setMinWidth(1200);
         Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/hospital-sign.png")));
         stage.getIcons().add(logo);
 
@@ -65,53 +67,56 @@ public class ViewFactory {
     }
 
 
-    public AnchorPane getHome() {
+    public Parent getHome() {
         return loadFXML("/com/example/iee2021168/home.fxml");
     }
 
-    public AnchorPane getAdd() {
+    public Parent getAdd() {
         return loadFXML("/com/example/iee2021168/add.fxml");
     }
 
-    public AnchorPane getEdit() {
+    public Parent getEdit() {
         return loadFXML("/com/example/iee2021168/edit.fxml");
     }
 
-    public AnchorPane getSearch() {
+    public Parent getSearch() {
         return loadFXML("/com/example/iee2021168/search.fxml");
     }
 
-    public AnchorPane getAddDoc(){
+    public Parent getAddDoc() {
         return loadFXML("/com/example/iee2021168/add-doc.fxml");
     }
 
-
-    public AnchorPane getAddPat() {
+    public Parent getAddPat() {
         return loadFXML("/com/example/iee2021168/add-pat.fxml");
     }
 
-    public AnchorPane getAddHis() {
+    public Parent getAddHis() {
         return loadFXML("/com/example/iee2021168/add-his.fxml");
     }
 
-    public AnchorPane getAddAppoint() {
+    public Parent getAddAppoint() {
         return loadFXML("/com/example/iee2021168/add-appoint.fxml");
     }
 
-    public AnchorPane getSearchDoc() {
+    public Parent getSearchDoc() {
         return loadFXML("/com/example/iee2021168/search-doc.fxml");
     }
 
-    public AnchorPane getSearchPat() {
+    public Parent getSearchPat() {
         return loadFXML("/com/example/iee2021168/search-pat.fxml");
     }
 
-    public AnchorPane getSearchAppoint() {
+    public Parent getSearchAppoint() {
         return loadFXML("/com/example/iee2021168/search-appoint.fxml");
     }
 
+    public Parent getLoading() {
+        return loadFXML("/com/example/iee2021168/loading.fxml");
+    }
 
-    private AnchorPane loadFXML(String fxmlPath) {
+
+    private Parent loadFXML(String fxmlPath) {
         try {
             System.out.println("Loading FXML: " + fxmlPath);
             return new FXMLLoader(getClass().getResource(fxmlPath)).load();

@@ -1,11 +1,10 @@
-/* CSS File: menu.css */
 
-/* Main container for the menu on the left */
+
+
 .menu_container {
-    -fx-background-color: rgb(69, 93, 122); /* Darker gray with slight transparency */
-
-    -fx-alignment: center; /* Center the content in the container */
-
+    -fx-background-color: rgb(69, 93, 122);
+    -fx-alignment: center;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.6), 15, 0.2, 4, -4);
 
 }
 

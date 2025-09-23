@@ -67,10 +67,13 @@ public class AddHisController implements Initializable {
                 resetForm();
                 return;
             }
+            if (!amkaText.matches("\\d{11}")) {
+                label.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
 
             label.setVisible(true);
-            String amka =amkaText;
-            boolean exists = Database.checkAmkaPatients(amka);
+            boolean exists = Database.checkAmkaPatients(amkaText);
 
             if (!exists) {
                 resetForm();
@@ -142,6 +145,11 @@ public class AddHisController implements Initializable {
     private void save() {
         try {
             String amka =amkaField.getText();
+            if (!amka.matches("\\d{11}")) {
+                label.setText("Το ΑΜΚΑ πρέπει να περιέχει ακριβώς 11 ψηφία!");
+                return;
+            }
+
             DoctorRecord selectedDoctor = ChoiceDoc.getValue();
             if (selectedDoctor == null) {
                 label.setText("Επιλέξτε γιατρό!");
@@ -165,7 +173,7 @@ public class AddHisController implements Initializable {
                 resetForm();
                 clearFormFields();
             } else {
-                label.setText("Σφάλμα!");
+                label.setText("Σφάλμα!"+result);
             }
         } catch (NumberFormatException e) {
             label.setText("Το πεδίο ΑΜΚΑ δέχεται μόνο 10 ψηφία!");

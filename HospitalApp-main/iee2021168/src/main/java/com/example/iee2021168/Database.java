@@ -6,9 +6,12 @@ import com.example.iee2021168.Controllers.HomeController;
 import com.example.iee2021168.Controllers.Search.SearchAppointController;
 import com.example.iee2021168.Controllers.Search.SearchDocController;
 import com.example.iee2021168.Controllers.Search.SearchPatController;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +19,9 @@ import java.util.Properties;
 
 public class Database {
 
-    // Database connection info
-    private static final String HOST = "postgresql-database-aris.i.aivencloud.com";
-    private static final String PORT = "16093";
-    private static final String DATABASE = "defaultdb";
-    private static final String USER = "avnadmin";
-    private static final String PASSWORD = "AVNS_HfzgKG5FlMYByaldXOy";
 
 
-    public static Connection connect() {
+    /*public static Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
 
@@ -42,7 +39,81 @@ public class Database {
             e.printStackTrace();
             return null;
         }
+    }*/
+    private static final String USER = "avnadmin";
+    private static final String JDBC_URL =
+            "jdbc:postgresql://postgresql-database-aris.i.aivencloud.com:16093/Hospital-app?currentSchema=hospital";
+
+    private static HikariDataSource dataSource = null;
+    private static String cachedPassword = null;
+
+    private static String getPasswordFromGUI() {
+        if (cachedPassword != null) {
+            return cachedPassword;
+        }
+
+        JPasswordField passwordField = new JPasswordField();
+        int option = JOptionPane.showConfirmDialog(
+                null,
+                passwordField,
+                "Κωδικός Βάσης Δεδομένων",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option == JOptionPane.OK_OPTION) {
+            cachedPassword = new String(passwordField.getPassword());
+            return cachedPassword;
+        } else {
+            throw new RuntimeException("Ακυρώσατε την εισαγωγή κωδικού");
+        }
     }
+
+    public static void initDataSource() {
+        if (dataSource != null) return;
+
+        String password = getPasswordFromGUI();
+
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(JDBC_URL);
+        config.setUsername(USER);
+        config.setPassword(password);
+        config.addDataSourceProperty("sslmode", "require");
+        config.setMaximumPoolSize(5); // adjust based on your app
+
+        dataSource = new HikariDataSource(config);
+    }
+
+    public static Connection connect() throws SQLException {
+        if (dataSource == null) {
+            initDataSource();
+        }
+        return dataSource.getConnection();
+    }
+
+    public static void verifyConnectionOrExit() {
+        try (Connection conn = connect()) {
+            if (conn.isValid(5)) {
+                System.out.println("✅ Database connection successful!");
+            }
+        } catch (RuntimeException e)  {
+            String message = e.getMessage().toLowerCase();
+            String errorMsg;
+
+            if (message.contains("password") || message.contains("authentication")) {
+                errorMsg = "ΛΑΘΟΣ ΚΩΔΙΚΟΣ";
+            } else {
+                errorMsg = "ΑΔΥΝΑΜΙΑ ΣΥΝΔΕΣΗΣ, ΕΛΕΓΞΤΕ ΤΗΝ ΣΥΝΔΕΣΗ ΣΤΟ ΔΙΑΔΙΚΤΥΟ ΚΑΙ ΠΡΟΣΠΑΘΗΣΤΕ ΑΡΓΟΤΕΡΑ";
+            }
+
+
+            JOptionPane.showMessageDialog(null, errorMsg, "ΑΔΥΝΑΜΙΑ ΣΥΝΔΕΣΗΣ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ", JOptionPane.ERROR_MESSAGE);
+            System.exit(1); // stop the application
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 
@@ -201,7 +272,7 @@ public class Database {
 
     public static int insertHistRecord(String patAmka, String docAmka, int roomId, String docName) {
         int result = -1;
-        String sql = "{ ? = call insert_hist(?, ?, ?, ?) }";
+        String sql = "{? = CALL insert_hist(?, ?, ?, ?)}";
         try (Connection conn = connect()) {
             assert conn != null;
             try (CallableStatement stmt = conn.prepareCall(sql)) {
