@@ -44,7 +44,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-      <Label fx:id="timeLabel" layoutX="898.0" layoutY="60.0" text="l" textAlignment="RIGHT" textFill="#daf6ff" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="60.0">
+      <Label fx:id="timeLabel" layoutX="898.0" layoutY="60.0" textAlignment="RIGHT" textFill="#daf6ff" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font name="Segoe UI Semibold" size="24.0" />
          </font>
