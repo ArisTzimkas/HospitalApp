@@ -40,18 +40,13 @@ public class Database {
             return null;
         }
     }*/
-    private static final String USER = "avnadmin";
+    private static final String USER = "hospital_demo";
     private static final String JDBC_URL =
             "jdbc:postgresql://postgresql-database-aris.i.aivencloud.com:16093/Hospital-app?currentSchema=hospital";
 
     private static HikariDataSource dataSource = null;
-    private static String cachedPassword = null;
 
-    private static String getPasswordFromGUI() {
-        if (cachedPassword != null) {
-            return cachedPassword;
-        }
-
+    private static char[] getPasswordFromGUI() {
         JPasswordField passwordField = new JPasswordField();
         int option = JOptionPane.showConfirmDialog(
                 null,
@@ -62,8 +57,7 @@ public class Database {
         );
 
         if (option == JOptionPane.OK_OPTION) {
-            cachedPassword = new String(passwordField.getPassword());
-            return cachedPassword;
+            return passwordField.getPassword();
         } else {
             throw new RuntimeException("Ακυρώσατε την εισαγωγή κωδικού");
         }
@@ -72,16 +66,20 @@ public class Database {
     public static void initDataSource() {
         if (dataSource != null) return;
 
-        String password = getPasswordFromGUI();
+        char[] password = getPasswordFromGUI();
+        try {
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl(JDBC_URL);
+            config.setUsername(USER);
+            config.setPassword(new String(password));
+            config.addDataSourceProperty("sslmode", "require");
+            config.setMaximumPoolSize(5);
 
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(JDBC_URL);
-        config.setUsername(USER);
-        config.setPassword(password);
-        config.addDataSourceProperty("sslmode", "require");
-        config.setMaximumPoolSize(5); // adjust based on your app
-
-        dataSource = new HikariDataSource(config);
+            dataSource = new HikariDataSource(config);
+        } finally {
+            // Καθαρίζει αμέσως τον κωδικό από τη μνήμη RAM
+            java.util.Arrays.fill(password, '\0');
+        }
     }
 
     public static Connection connect() throws SQLException {
