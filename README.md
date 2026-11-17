@@ -24,7 +24,7 @@ Hospital managment desktop apllication made with Java and JavaFX21. The purpose 
 ### Search
 ![alt text](https://github.com/ArisTzimkas/HospitalApp/blob/master/p3.png?raw=true)
 * Doctors
-  - Highest scrore doctor per department
+  - Highest-scrore doctor per department
   - Amount of doctors per department
   - All the records of a desired doctor (search using personal number)
  
